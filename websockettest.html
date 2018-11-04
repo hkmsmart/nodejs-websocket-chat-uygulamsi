@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Websocket Test</title>
+	<script type="text/javascript">
+		var wsurl = "ws://echo.websocket.org/";
+		var output;
+
+		function init(){
+			output = document.getElementById("output");
+			testWebSocket();
+		}
+
+		function testWebSocket(){
+			websocket           = new WebSocket(wsurl);
+			websocket.onopen    = function(evt){ onOpen(evt) };
+			websocket.onclose   = function(evt){ onClose(evt) };
+			websocket.onmessage = function(evt){ onMessage(evt) };
+			websocket.onerror   = function(evt){ onError(evt) };
+
+		}
+
+		function onOpen(){
+			writeToScreen("CONNECTED");
+			dosend("WebSocket rocks");
+		}
+
+		function onClose(){
+			writeToScreen("DISCONNECTED");
+		}
+
+		function onMessage(){
+			writeToScreen('<span style="color:blue;"> RESPONSE:'+evt.data+'</span>');
+			websocket.close();
+		}
+
+		function onError(){
+			writeToScreen("SENT:" + message);
+			websocket.send(message);
+		}
+
+		function writeToScreen(message){
+			var pre            = document.createElement("p");
+			pre.style.wordWrap = "break-word";
+			pre.innerHTML      = message;
+			output.appendChild(pre);
+		}
+
+		window.addEventListener("load", init, false);
+	</script>
+</head>
+<body>
+	<h2>WebSocket Test</h2>
+	<div id="output"></div>
+
+</body>
+</html>

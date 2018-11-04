@@ -1,0 +1,9 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	//... klosorde böyle bir dosya yok ama bu dosya socket.io tarafından varmış gibi sanal taracıya servis ediliyor
+	var socket = io('/');
+	socket.on('news', function(data){
+		console.log(data);
+		socket.emit('my other event', {my: 'data'});
+	});
+</script>
